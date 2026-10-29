@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rose-leaf-training
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 21600
+  ttlSecondsAfterFinished: 86400
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: default
+      containers:
+        - name: trainer
+          image: europe-west4-docker.pkg.dev/ai-demand-products/cloud-run-source-deploy/rose-leaf-classifier:v1
+          imagePullPolicy: IfNotPresent
+          command: ["python", "train.py"]
+          env:
+            - name: GCS_BUCKET_NAME
+              value: "ai-engineering-api-983807437277-data"
+            - name: EPOCHS
+              value: "8"
+            - name: BATCH_SIZE
+              value: "16"
+          resources:
+            requests:
+              cpu: "4"
+              memory: "16Gi"
+              ephemeral-storage: "10Gi"
+            limits:
+              cpu: "4"
+              memory: "16Gi"
+              ephemeral-storage: "10Gi"
