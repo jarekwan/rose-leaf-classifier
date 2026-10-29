@@ -15,3 +15,9 @@ The training job is defined in `train-job.yaml`; the prediction API is in `app.p
 - `requirements.txt` — Python dependencies.
 
 The model predicts one of the four dataset labels. It does not identify the plant species.
+
+## Demo
+
+[Open the image classification app](https://lnkd.in/dGmiae_M)
+
+The demo is available while the Cloud Run service is running.
